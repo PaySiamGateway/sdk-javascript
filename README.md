@@ -3,7 +3,7 @@
 
 import { init } from './gatewayCfg.js';
 
-import { recharge, rechargeAsync, withdraw, withdrawAsync, detail, detailAsync } from './gatewaySdk.js';
+import { deposit, depositAsync, withdraw, withdrawAsync, detail, detailAsync } from './gatewaySdk.js';
 
 
 /**
@@ -29,19 +29,19 @@ export async function test() {
     
     init(apiUrl, appId, key, secret, serverPubKey, privateKey);
 
-    // Here is an example of a recharge 
+    // Here is an example of a deposit 
     
-    // return recharge result: code=1,message=,transactionId=12817291,paymentUrl=https://www.xxxx...
+    // return deposit result: code=1,message=,transactionId=12817291,paymentUrl=https://www.xxxx...
     
-    recharge("10001", 1.06, "MYR", "TNG_MY", "gateway Test", "gateway@hotmail.com", "0123456789", (result) => {
-        console.log("recharge result:", result);
+    deposit("10001", 100.00, "THB", "BANK_QRCODE", "gateway Test", "gateway@hotmail.com", "0812345678", (result) => {
+        console.log("deposit result:", result);
     });
 
     // Here is an example of a withdraw
     
     // return withdraw result: code=1,message=,transactionId=12817291
     
-    withdraw("10012", 1.06, "MYR", "CIMB", "gateway Test", "234719327401231", "", "gateway@hotmail.com", "0123456789", (result) => {
+    withdraw("10012", 100.00, "THB", "PROMPTPAY_MOBILE", "gateway Test", "0812345678", "", "gateway@hotmail.com", "0812345678", (result) => {
         console.log("withdraw result:", result);
     });
 
@@ -53,15 +53,15 @@ export async function test() {
         console.log("detail result:", result);
     });
 
-    // Here is an example of a async recharge 
+    // Here is an example of an async deposit 
     
-    let rechargeResult = await rechargeAsync("10001", 1.06, "MYR", "TNG_MY", "gateway Test", "gateway@hotmail.com", "0123456789");
+    let depositResult = await depositAsync("10001", 100.00, "THB", "BANK_QRCODE", "gateway Test", "gateway@hotmail.com", "0812345678");
     
-    console.log("async recharge result:", rechargeResult);
+    console.log("async deposit result:", depositResult);
 
     // Here is an example of a async withdraw 
     
-    let withdrawResult = await withdrawAsync("10012", 1.06, "MYR", "CIMB", "gateway Test", "234719327401231", "", "gateway@hotmail.com", "0123456789");
+    let withdrawResult = await withdrawAsync("10012", 100.00, "THB", "PROMPTPAY_MOBILE", "gateway Test", "0812345678", "", "gateway@hotmail.com", "0812345678");
     
     console.log("async withdraw result:", withdrawResult);
 

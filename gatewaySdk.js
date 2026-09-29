@@ -23,8 +23,8 @@ var EncryptAuthInfo = null;
  * user deposit
  * @param {*} orderId orderId order number - maxlength(40)
  * @param {*} amount amount order amount - maxlength(20)
- * @param {*} currency currency Empty default: MYR - maxlength(16)
- * @param {*} payMethod payMethod FPX, TNG_MY, ALIPAY_CN, GRABPAY_MY, BOOST_MY - maxlength(16)
+ * @param {*} currency currency Empty default: THB - ISO 4217 currency code
+ * @param {*} payMethod payMethod PAYPLUS_KBANK, BANK_QRCODE, EPAYMENT_TRUEMONEY
  * @param {*} customerName customerName customer name - maxlength(64)
  * @param {*} customerEmail customerEmail customer email - maxlength(64)
  * @param {*} customerPhone customerPhone customer phone - maxlength(20)
@@ -43,8 +43,8 @@ export function deposit(orderId, amount, currency, payMethod, customerName, cust
             // If callbackUrl and redirectUrl are empty, take the values ​​of [curl] and [rurl] in the developer center.
             // Remember, the format of json and the order of json attributes must be the same as the SDK specifications.
             // The sorting rules of Json attribute data are arranged from [a-z]
-            let bodyJson = "{\"customer\":{\"email\":\"" + customerEmail + "\",\"name\":\"" + customerName + "\",\"phone\":\"" + customerPhone + "\"},\"method\":\"" + payMethod + "\",\"order\":{\"additionalData\":\"\",\"amount\":\"" + amount + "\",\"currencyType\":\"" + (isnull(currency) ? "MYR" : currency) + "\",\"id\":\"" + orderId + "\",\"title\":\"Payment\"}}";
-            //let bodyJson = "{\"callbackUrl\":\"https://www.google.com\",\"customer\":{\"email\":\"" + customerEmail + "\",\"name\":\"" + customerName + "\",\"phone\":\"" + customerPhone + "\"},\"method\":\"" + payMethod + "\",\"order\":{\"additionalData\":\"\",\"amount\":\"" + amount + "\",\"currencyType\":\"" + (isnull(currency) ? "MYR" : currency) + "\",\"id\":\"" + orderId + "\",\"title\":\"Payment\"},\"redirectUrl\":\"https://www.google.com\"}";
+            let bodyJson = "{\"customer\":{\"email\":\"" + customerEmail + "\",\"name\":\"" + customerName + "\",\"phone\":\"" + customerPhone + "\"},\"method\":\"" + payMethod + "\",\"order\":{\"additionalData\":\"\",\"amount\":\"" + amount + "\",\"currencyType\":\"" + (isnull(currency) ? "THB" : currency) + "\",\"id\":\"" + orderId + "\",\"title\":\"Payment\"}}";
+            //let bodyJson = "{\"callbackUrl\":\"https://www.google.com\",\"customer\":{\"email\":\"" + customerEmail + "\",\"name\":\"" + customerName + "\",\"phone\":\"" + customerPhone + "\"},\"method\":\"" + payMethod + "\",\"order\":{\"additionalData\":\"\",\"amount\":\"" + amount + "\",\"currencyType\":\"" + (isnull(currency) ? "THB" : currency) + "\",\"id\":\"" + orderId + "\",\"title\":\"Payment\"},\"redirectUrl\":\"https://www.google.com\"}";
             let base64ReqBody = sortedAfterToBased64(bodyJson);
             let signature = createSignature(cnst, base64ReqBody);
             let encryptData = symEncrypt(base64ReqBody);
@@ -76,8 +76,8 @@ export function deposit(orderId, amount, currency, payMethod, customerName, cust
  * user deposit
  * @param {*} orderId orderId order number - maxlength(40)
  * @param {*} amount amount order amount - maxlength(20)
- * @param {*} currency currency Empty default: MYR - maxlength(16)
- * @param {*} payMethod payMethod FPX, TNG_MY, ALIPAY_CN, GRABPAY_MY, BOOST_MY - maxlength(16)
+ * @param {*} currency currency Empty default: THB - ISO 4217 currency code
+ * @param {*} payMethod payMethod PAYPLUS_KBANK, BANK_QRCODE, EPAYMENT_TRUEMONEY
  * @param {*} customerName customerName customer name - maxlength(64)
  * @param {*} customerEmail customerEmail customer email - maxlength(64)
  * @param {*} customerPhone customerPhone customer phone - maxlength(20)
@@ -99,8 +99,8 @@ export async function depositAsync(orderId, amount, currency, payMethod, custome
  * user withdraw
  * @param {*} orderId orderId order number - maxlength(40)
  * @param {*} amount amount order amount - maxlength(20)
- * @param {*} currency currency Empty default: MYR - maxlength(16)
- * @param {*} bankCode bankCode MayBank=MBB,Public Bank=PBB,CIMB Bank=CIMB,Hong Leong Bank=HLB,RHB Bank=RHB,AmBank=AMMB,United Overseas Bank=UOB,Bank Rakyat=BRB,OCBC Bank=OCBC,HSBC Bank=HSBC  - maxlength(16)
+ * @param {*} currency currency Empty default: THB - ISO 4217 currency code
+ * @param {*} bankCode bankCode PROMPTPAY_MOBILE
  * @param {*} cardholder cardholder cardholder - maxlength(64)
  * @param {*} accountNumber accountNumber account number - maxlength(20)
  * @param {*} refName refName recipient refName - maxlength(64)
@@ -121,8 +121,8 @@ export function withdraw(orderId, amount, currency, bankCode, cardholder, accoun
             // payoutspeed contain "fast", "normal", "slow" ,default is : "fast"
             // Remember, the format of json and the order of json attributes must be the same as the SDK specifications.
             // The sorting rules of Json attribute data are arranged from [a-z]
-            let bodyJson = "{\"order\":{\"amount\":\"" + amount.toString() + "\",\"currencyType\":\"" + (isnull(currency) ? "MYR" : currency) + "\",\"id\":\"" + orderId + "\"},\"recipient\":{\"email\":\"" + recipientEmail + "\",\"methodRef\":\"" + refName + "\",\"methodType\":\"" + bankCode + "\",\"methodValue\":\"" + accountNumber + "\",\"name\":\"" + cardholder + "\",\"phone\":\"" + recipientPhone + "\"}}";
-            //let bodyJson = "{\"callbackUrl\":\"https://www.google.com\",\"order\":{\"amount\":\"" + amount.toString() + "\",\"currencyType\":\"" + (isnull(currency) ? "MYR" : currency) + "\",\"id\":\"" + orderId + "\"},\"payoutspeed\":\"normal\",\"recipient\":{\"email\":\"" + recipientEmail + "\",\"methodRef\":\"" + refName + "\",\"methodType\":\"" + bankCode + "\",\"methodValue\":\"" + accountNumber + "\",\"name\":\"" + cardholder + "\",\"phone\":\"" + recipientPhone + "\"}}";
+            let bodyJson = "{\"order\":{\"amount\":\"" + amount.toString() + "\",\"currencyType\":\"" + (isnull(currency) ? "THB" : currency) + "\",\"id\":\"" + orderId + "\"},\"recipient\":{\"email\":\"" + recipientEmail + "\",\"methodRef\":\"" + refName + "\",\"methodType\":\"" + bankCode + "\",\"methodValue\":\"" + accountNumber + "\",\"name\":\"" + cardholder + "\",\"phone\":\"" + recipientPhone + "\"}}";
+            //let bodyJson = "{\"callbackUrl\":\"https://www.google.com\",\"order\":{\"amount\":\"" + amount.toString() + "\",\"currencyType\":\"" + (isnull(currency) ? "THB" : currency) + "\",\"id\":\"" + orderId + "\"},\"payoutspeed\":\"normal\",\"recipient\":{\"email\":\"" + recipientEmail + "\",\"methodRef\":\"" + refName + "\",\"methodType\":\"" + bankCode + "\",\"methodValue\":\"" + accountNumber + "\",\"name\":\"" + cardholder + "\",\"phone\":\"" + recipientPhone + "\"}}";
             let base64ReqBody = sortedAfterToBased64(bodyJson);
             let signature = createSignature(cnst, base64ReqBody);
             let encryptData = symEncrypt(base64ReqBody);
@@ -154,8 +154,8 @@ export function withdraw(orderId, amount, currency, bankCode, cardholder, accoun
  * user withdraw
  * @param {*} orderId orderId order number - maxlength(40)
  * @param {*} amount amount order amount - maxlength(20)
- * @param {*} currency currency Empty default: MYR - maxlength(16)
- * @param {*} bankCode bankCode MayBank=MBB,Public Bank=PBB,CIMB Bank=CIMB,Hong Leong Bank=HLB,RHB Bank=RHB,AmBank=AMMB,United Overseas Bank=UOB,Bank Rakyat=BRB,OCBC Bank=OCBC,HSBC Bank=HSBC  - maxlength(16)
+ * @param {*} currency currency Empty default: THB - ISO 4217 currency code
+ * @param {*} bankCode bankCode PROMPTPAY_MOBILE
  * @param {*} cardholder cardholder cardholder - maxlength(64)
  * @param {*} accountNumber accountNumber account number - maxlength(20)
  * @param {*} refName refName recipient refName - maxlength(64)
